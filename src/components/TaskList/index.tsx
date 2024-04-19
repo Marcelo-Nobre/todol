@@ -6,6 +6,7 @@ import { TaskItem } from "../TaskItem";
 import ClipboardIcon from '../../assets/clipboard.png'
 
 import { styles } from "./styles";
+import { useState } from "react";
 
 interface TaskListProps {
   items: ItemsProps[];
@@ -14,6 +15,8 @@ interface TaskListProps {
 }
 
 export const TaskList = ({ items, setItems, updateTask }: TaskListProps) => {
+    const [searchTerm, setSearchTerm] = useState('');
+
     const handleRemoveItem = (item: ItemsProps) => {
       const newItems = items.filter(taskItem => taskItem.task !== item.task);
       setItems(newItems);
@@ -43,8 +46,6 @@ export const TaskList = ({ items, setItems, updateTask }: TaskListProps) => {
           ListEmptyComponent={() => (
             <View style={styles.emptyContainer}>
               <Image source={ClipboardIcon} style={styles.emptyIcon} />
-              <Text style={styles.title}>Você ainda não tem tarefas cadastradas</Text>
-              <Text style={styles.subtitle}>Crie tarefas e organize seus itens a fazer</Text>
             </View>
           )}
         />
