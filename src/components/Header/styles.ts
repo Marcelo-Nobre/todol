@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    marginBottom: 20, // Ajuste conforme necessário
+    marginBottom: 20,
   },
   form: {
     position: 'absolute',
@@ -51,6 +51,6 @@ export const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10, // Adicionei um espaçamento inferior para o container de pesquisa
+    marginBottom: 10,
   },
 });

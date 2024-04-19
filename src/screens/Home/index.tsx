@@ -1,8 +1,15 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Alert, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
+import {
+  Alert,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { TaskList } from "../../components/TaskList";
-import Logo from '../../assets/logo.png'
-import PlusIcon from '../../assets/plusIcon.png'
+import Logo from "../../assets/logo.png";
+import PlusIcon from "../../assets/plusIcon.png";
 import Theme from "../../styles/Theme";
 import { styles } from "./styles";
 import { createItem, fetchItems } from "../../services/apiServices";
@@ -17,63 +24,67 @@ export interface ItemsProps {
 
 export const Home = () => {
   const [items, setItems] = useState<ItemsProps[]>([]);
-  const [inputItem, setInputItem] = useState('');
-  const [inputDescription, setInputDescription] = useState('');
+  const [inputItem, setInputItem] = useState("");
+  const [inputDescription, setInputDescription] = useState("");
   const [finishedItems, setFinishedItems] = useState<Number>(0);
 
   useEffect(() => {
-    // Ao montar o componente, chama a função para buscar os itens da API
     fetchItems()
       .then((data) => {
-        setItems(data); // Atualiza o estado com os itens da API
+        setItems(data);
       })
       .catch((error) => {
         console.error("Erro ao buscar itens:", error);
-        // Trate o erro conforme necessário
       });
-  }, []); // O segundo parâmetro do useEffect vazio indica que ele será executado apenas uma vez após a montagem do componente
-
+  }, []);
   useEffect(() => {
-    setFinishedItems(items.filter(item => item.checked).length);
+    setFinishedItems(items.filter((item) => item.checked).length);
   }, [items]);
 
-  const handleAddItem = useCallback(()=> {
-    if(inputItem === '') return;
+  const handleAddItem = useCallback(() => {
+    if (inputItem === "") return;
 
-    if(items.find(item => item.task.toLowerCase() === inputItem.toLowerCase())){
-      Alert.alert("Item já existe!", "Você não pode cadastrar uma tarefa com o mesmo nome");
+    if (
+      items.find((item) => item.task.toLowerCase() === inputItem.toLowerCase())
+    ) {
+      Alert.alert(
+        "Item já existe!",
+        "Você não pode cadastrar uma tarefa com o mesmo nome"
+      );
       return;
     }
 
     const data: ItemsProps = {
-      id: Math.random().toString(), // Generate a unique id
+      id: Math.random().toString(),
       task: inputItem,
       description: inputDescription,
-      checked: false
+      checked: false,
     };
 
-    // Adiciona o novo item localmente
-    setItems(old => [...old,data]);
+    setItems((old) => [...old, data]);
 
     createItem(data)
       .then((response) => {
-        // Se a criação for bem-sucedida, você pode tratar a resposta se necessário
         console.log("Item criado com sucesso:", response);
       })
       .catch((error) => {
-        // Se ocorrer um erro ao criar o item, você pode tratar o erro aqui
         console.error("Erro ao criar item:", error);
-        // Talvez você queira remover o item localmente se a criação falhar
-        // setItems((oldItems) => oldItems.filter((item) => item.id !== data.id));
       });
 
-    setInputItem('');
-    setInputDescription('');
-  }, [inputItem, inputDescription, setItems, items, setInputItem, setInputDescription]);
+    setInputItem("");
+    setInputDescription("");
+  }, [
+    inputItem,
+    inputDescription,
+    setItems,
+    items,
+    setInputItem,
+    setInputDescription,
+  ]);
 
   const updateTask = (id: string, task: string, description: string) => {
-    setItems(oldItems =>
-      oldItems.map(item => {
+    setItems((oldItems) =>
+      oldItems.map((item) => {
         if (item.id === id) {
           return { ...item, task: task, description: description };
         } else {
@@ -85,7 +96,7 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={Logo} style={styles.logo}/>
+      <Image source={Logo} style={styles.logo} />
       <View style={styles.wrapper}>
         <View style={styles.inputContainer}>
           <TextInput
@@ -102,8 +113,12 @@ export const Home = () => {
             placeholderTextColor={Theme.colors.GRAY_300}
             onChangeText={setInputDescription}
           />
-          <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handleAddItem}>
-            <Image source={PlusIcon} style={styles.buttonIcon}/>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.7}
+            onPress={handleAddItem}
+          >
+            <Image source={PlusIcon} style={styles.buttonIcon} />
           </TouchableOpacity>
         </View>
         <View style={styles.header}>
@@ -116,7 +131,6 @@ export const Home = () => {
             <Text style={styles.valueCounter}>{String(finishedItems)}</Text>
           </View>
         </View>
-        {/* Passa os itens para o componente TaskList */}
         <TaskList items={items} setItems={setItems} updateTask={updateTask} />
       </View>
     </View>

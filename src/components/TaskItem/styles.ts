@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         borderRadius: 8,
         backgroundColor: Theme.colors.GRAY_400,
-        marginBottom: 12, // Aumentando o espaço entre os itens
+        marginBottom: 12,
     },
     circle: {
         width: 24,
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         height: 9,
     },
     taskInfo: {
-        flex: 1, // Ocupa o espaço restante na linha
+        flex: 1,
     },
     text: {
         textAlign: "left",
@@ -43,13 +43,13 @@ export const styles = StyleSheet.create({
         color: Theme.colors.GRAY_300,
     },
     description: {
-        color: Theme.colors.GRAY_200, // Cor da descrição
-        marginTop: 4, // Espaço entre o nome e a descrição
+        color: Theme.colors.GRAY_200,
+        marginTop: 4,
     },
     trashIcon: {
         width: 20,
         height: 24,
-        marginRight: 16, // Movido para a direita para separar do ícone da lixeira
+        marginRight: 16,
     },
     actionButton: {
         flexDirection: "row",

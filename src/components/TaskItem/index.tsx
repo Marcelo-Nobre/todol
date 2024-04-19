@@ -9,12 +9,18 @@ import { styles } from "./styles";
 
 interface TaskItemProps {
   item: ItemsProps;
-  onUpdateTask: (id: string, task: string, description: string) => void; // Renomeando a propriedade para onUpdateTask
+  onUpdateTask: (id: string, task: string, description: string) => void;
   onCheck: () => void;
   onRemove: () => void;
 }
 
-export const TaskItem = ({ item, onUpdateTask, onCheck, onRemove }: TaskItemProps) => { // Atualizando a lista de props
+export const TaskItem = ({
+  item,
+  onUpdateTask,
+  onCheck,
+  onRemove,
+}: TaskItemProps) => {
+
   const [editing, setEditing] = useState(false);
   const [editedTask, setEditedTask] = useState(item.task);
   const [editedDescription, setEditedDescription] = useState(item.description);
@@ -24,7 +30,7 @@ export const TaskItem = ({ item, onUpdateTask, onCheck, onRemove }: TaskItemProp
   };
 
   const handleSaveEdit = () => {
-    onUpdateTask(item.id, editedTask, editedDescription); // Chame a função onUpdateTask com os novos valores
+    onUpdateTask(item.id, editedTask, editedDescription);
     setEditing(false);
   };
 
